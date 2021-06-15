@@ -1,0 +1,75 @@
+The following program submission has been recorded:
+
+Student: dlender
+Class: CS159
+Section: 29958
+Assignment: hw02.c
+Submission: 2021-02-15 16:08
+
+If the above is incorrect, you are responsible for resubmitting the assignment or seeking assistance from a course staff member prior to the due date! Assignments will never be accepted by e-mail.
+
+If this is for a lab assignment, only one member must be designated to make a submission for the group.  Graders will not evaluate submissions from multiple group members to determine which effort you actually want graded.
+
+*** Please do not reply to this email ***
+
+The contents of the submission:
+     1	/***************************************************************************
+     2	*
+     3	*  Programmer and Purdue Email Address:
+     4	*  1. dlender@purdue.edu
+     5	*
+     6	*  Homework #:2
+     7	*
+     8	*  Academic Integrity Statement:
+     9	*
+    10	*  I have not used source code obtained from any other unauthorized source, 
+    11	*  either modified or unmodified.  Neither have I provided access to my code 
+    12	*  to another. The effort I am submitting is my own original work.
+    13	*
+    14	*  Day, Time, Location of Lab:Monday 1:30 SC
+    15	*
+    16	*  Program Description:
+    17	* This program calculates the two tension forces and acceleration on mass hanging behind a plane
+    18	* using inputted masses and the force by the propeller.
+    19	***************************************************************************/
+    20	
+    21	#include <stdio.h> //includes standard input/output functions
+    22	#include <math.h> //includes standard math library functions
+    23	
+    24	int main()
+    25	{
+    26	  double mass_plane; //defines the mass of the plane (kg)
+    27	  double mass_glider1; //defines the mass of the first glider (kg)
+    28	  double mass_glider2; //defines the mass of the second glider (kg)
+    29	  double force_prop; //defines the force by the propeller (N)
+    30	  double acceleration; //defines the acceleration (m/s^2)
+    31	  double tension1; //defines the tension force on cable 1 (N)
+    32	  double tension2; //defines the tension force on cable 2 (N)
+    33	  int width_mod; //defines the width modifier as an integar
+    34	
+    35	//the following lines prompt for and recieve the information for the variables above
+    36	  printf("Enter mass of airplane (kg) -> ");
+    37	  scanf("%lf",&mass_plane);
+    38	  printf("Enter mass of glider #1 (kg) -> ");
+    39	  scanf("%lf",&mass_glider1);
+    40	  printf("Enter mass of glider #2 (kg) -> ");
+    41	  scanf("%lf",&mass_glider2);
+    42	  printf("Enter force produced by propellers (N) -> ");
+    43	  scanf("%lf",&force_prop);
+    44	
+    45	//the following lines use the log function to calculate how many digits there are in the force input and then sets to an integer so the value can be used as a modifier
+    46	  width_mod = log10(force_prop) + 7;
+    47	
+    48	//the lines below calculate the acceleration and tension forces using the inputed values
+    49	  acceleration = force_prop / (mass_glider1 + mass_glider2 + mass_plane);
+    50	  tension2 = acceleration * mass_glider2;
+    51	  tension1 = acceleration * (mass_glider2 + mass_glider1);
+    52	
+    53	//the lines below display the accerleration and tension forces calculated above
+    54	  printf("\nAcceleration: %.2lf", acceleration);
+    55	  printf(" m/s^2\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+    56	  printf("\nResulting tension on cable #1:%*.2lf",width_mod,tension1);
+    57	  printf(" Newtons\nResulting tension on cable #2:%*.2lf",width_mod,tension2);
+    58	  printf(" Newtons\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+    59	  return(0);
+    60	}
