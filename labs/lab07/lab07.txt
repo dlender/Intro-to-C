@@ -1,0 +1,266 @@
+The following program submission has been recorded:
+
+Student: dlender
+Class: CS159
+Section: 29958
+Assignment: lab07.c
+Submission: 2021-03-25 13:45
+
+If the above is incorrect, you are responsible for resubmitting the assignment or seeking assistance from a course staff member prior to the due date! Assignments will never be accepted by e-mail.
+
+If this is for a lab assignment, only one member must be designated to make a submission for the group.  Graders will not evaluate submissions from multiple group members to determine which effort you actually want graded.
+
+*** Please do not reply to this email ***
+
+The contents of the submission:
+     1	/***************************************************************************
+     2	*
+     3	*  Programmers and Purdue Email Addresses:
+     4	*  1. cpoukey@purdue.edu
+     5	*  2. zrohm@purdue.edu
+     6	*  3. dlender@purdue.edu
+     7	*
+     8	*  Lab #: 7
+     9	*
+    10	*  Academic Integrity Statement:
+    11	*
+    12	*  We have not used source code obtained from any other unauthorized source,
+    13	*  either modified or unmodified.  Neither have we provided access to our code
+    14	*  to another. The effort we are submitting is our own original work.
+    15	*
+    16	*  Day, Time, Location of Lab: Monday, 13:30 ET, SC 231
+    17	*
+    18	*  Program Description: This program gets a base 10 number from
+    19	*                                     the user and converts it to base 8. The
+    20	*                                     program then compares the number of
+    21	*                                     odd and even digits of the two numbers
+    22	*                                     respectively before outputting the
+    23	*                                     converted and calculated values via print
+    24	*                                     statements.
+    25	*
+    26	***************************************************************************/
+    27	
+    28	//Imports math and stdio libraries for later use
+    29	#include<stdio.h>
+    30	#include<math.h>
+    31	
+    32	//GLOBAL DECLARATIONS
+    33	int getDecimal(void);
+    34	int convertToOctal(int decimal);
+    35	int countDigits(int num, int isOdd);
+    36	void output(int octal, int oddChange, int evenChange);
+    37	
+    38	int main(void)
+    39	{
+    40	  //LOCAL DECLARATIONS
+    41	  int decimal; //Variable for user-inputted base 10 number
+    42	  int octal; //Variable for converted base 8 number
+    43	  int decimalOddDigits; //Variable for number of odd digits in base 10 number
+    44	  int decimalEvenDigits; //Variable for number of even digits in base 10 number
+    45	  int octalOddDigits; //Variable for number of odd digits in base 8 number
+    46	  int octalEvenDigits; //Variable for number of even digits in base 8 number
+    47	
+    48	  //EXECUTABLE STATEMENTS
+    49	  //Gets user-inputted base 10 value and converts to base 8 via UDFs
+    50	  decimal = getDecimal();
+    51	  octal = convertToOctal(decimal);
+    52	
+    53	  //Gets number of odd and even digits for each base number via UDFs
+    54	  decimalOddDigits = countDigits(decimal, 1);
+    55	  decimalEvenDigits = countDigits(decimal, 0);
+    56	  octalOddDigits = countDigits(octal, 1);
+    57	  octalEvenDigits = countDigits(octal, 0);
+    58	
+    59	  //Outputs converted and calculated values via a UDF
+    60	  output(octal, decimalOddDigits - octalOddDigits, decimalEvenDigits - octalEvenDigits);
+    61	
+    62	  //Returns the integer 0, effectively terminating the main function
+    63	  return(0);
+    64	}
+    65	
+    66	/***************************************************************************
+    67	*
+    68	*  Function Information
+    69	*
+    70	*  Name of Function: getDecimal
+    71	*
+    72	*  Function Return Type: int
+    73	*
+    74	*  Parameters (list data type, name, and comment one per line):
+    75	*    1. void
+    76	*
+    77	*  Function Description: This function gets a positive base 10 integer from
+    78	*                        the user as input. If the user does not enter a
+    79	*                        positive number, then an error will be produced
+    80	*                        and the function will ask for another number.
+    81	*
+    82	***************************************************************************/
+    83	int getDecimal(void)
+    84	{
+    85	  int decimal; //Variable for user-inputted base 10 number
+    86	
+    87	  /*Handles user input by setting the default value to a negative and repeating
+    88	    the following code whenever the value is negative*/
+    89	  decimal = -1;
+    90	  while(decimal < 1)
+    91	  {
+    92	    //Gets a base 10 value from user
+    93	    printf("Enter decimal value -> ");
+    94	    scanf("%d", &decimal);
+    95	
+    96	    //If base 10 number is negative, print error message
+    97	    if(decimal < 0)
+    98	    {
+    99	      printf("\nError! The decimal value provided should be non-negative.\n\n");
+   100	    }
+   101	  }
+   102	
+   103	  //Returns inputted decimal to main function
+   104	  return(decimal);
+   105	}
+   106	
+   107	/***************************************************************************
+   108	*
+   109	*  Function Information
+   110	*
+   111	*  Name of Function: convertToOctal
+   112	*
+   113	*  Function Return Type: int
+   114	*
+   115	*  Parameters (list data type, name, and comment one per line):
+   116	*    1. int decimal - User-inputted base 10 number
+   117	*
+   118	*  Function Description: This function uses repetition based on a
+   119	*                                     while statement to convert a base 10
+   120	*                                     number to a base 8 number.
+   121	*
+   122	***************************************************************************/
+   123	int convertToOctal(int decimal)
+   124	{
+   125	  int octal; //Variable for converted base 8 number
+   126	  int mult; //Variable for multiplication factor based on iterations
+   127	
+   128	  //Sets default octal value to 0 and multiplication factor to 1*10^0
+   129	  octal = 0;
+   130	  mult = 1;
+   131	  
+   132	  //Runs until decimal only contains leading 0 digits
+   133	  while(decimal > 0)
+   134	  {
+   135	    //Uses multiplier factor to place new remainder at front of octal
+   136	    octal += mult * (decimal % 8);
+   137	    
+   138	    //Divides decimal by a factor of 8 due to conversion being to base 8
+   139	    decimal /= 8;
+   140	    //Multiplies multiplier by a factor of 10 due to conversion being from base 10
+   141	    mult *= 10;
+   142	  }
+   143	
+   144	  //Returns converted base 8 number
+   145	  return(octal);
+   146	}
+   147	
+   148	/***************************************************************************
+   149	*
+   150	*  Function Information
+   151	*
+   152	*  Name of Function: countDigits
+   153	*
+   154	*  Function Return Type: int
+   155	*
+   156	*  Parameters (list data type, name, and comment one per line):
+   157	*    1. int num - Number to count odd or even digits of
+   158	*    2. int isOdd - Marks whether targeting odd or even digits
+   159	*
+   160	*  Function Description: This function counts the specified odd or
+   161	*                                     even digits in a number given the number
+   162	*                                     and whether the user would like to target
+   163	*                                     odd or even numbers.
+   164	*
+   165	***************************************************************************/
+   166	int countDigits(int num, int isOdd)
+   167	{
+   168	  int digits; //Variable for number of odd or even digits
+   169	
+   170	  //Sets default number or odd or even digits to 0
+   171	  digits = 0;
+   172	
+   173	  //If isOdd is 0, then targeting even digits, otherwise, targeting odd digits
+   174	  if(isOdd == 0)
+   175	  {
+   176	    //Continues to run until there are no non-zero leading digits of num
+   177	    while(num > 0)
+   178	    {
+   179	      //If the last digit in num is even, adds 1 of digits
+   180	      if(num % 2 == 0)
+   181	      {
+   182	        digits++;
+   183	      }
+   184	
+   185	      //Divides num by 10 to truncate digit that was just analyzed
+   186	      num /= 10;
+   187	    }
+   188	  }
+   189	  else
+   190	  {
+   191	    //Continues to run until there are no non-zero leading digits of num
+   192	    while(num > 0)
+   193	    {
+   194	      //If the last digit in num is odd, adds 1 of digits
+   195	      if(num % 2 != 0)
+   196	      {
+   197	        digits++;
+   198	      }
+   199	
+   200	      //Divides num by 10 to truncate digit that was just analyzed
+   201	      num /= 10;
+   202	    }
+   203	  }
+   204	
+   205	  //Returns number of targeted even or odd digits
+   206	  return(digits);
+   207	}
+   208	
+   209	/***************************************************************************
+   210	*
+   211	*  Function Information
+   212	*
+   213	*  Name of Function: output
+   214	*
+   215	*  Function Return Type: void
+   216	*
+   217	*  Parameters (list data type, name, and comment one per line):
+   218	*    1. int octal - Converted base 8 value
+   219	*    2. int oddChange - Difference in odd numbers between base 10 and base 8
+   220	*    3. int evenChange - Difference in even numbers between base 10 and base 8
+   221	*
+   222	*  Function Description: This function outputs each converted and
+   223	*                                     calculated value with a description in front
+   224	*                                     via print statements.
+   225	*
+   226	***************************************************************************/
+   227	void output(int octal, int oddChange, int evenChange)
+   228	{
+   229	  //Prints converted base 8 number
+   230	  printf("\nOctal equivalent: %d\n", octal);
+   231	
+   232	  //Prints odd digit change description
+   233	  printf("Odd digit change: ");
+   234	
+   235	  //If odd digit change is positive, prints positive sign (+) followed by number
+   236	  if(oddChange > 0)
+   237	  {
+   238	    printf("+");
+   239	  }
+   240	  printf("%d\n", oddChange);
+   241	
+   242	  //Prints even digit change description
+   243	  printf("Even digit change: ");
+   244	
+   245	  //If even digit change is positive, prints positive sign (+) followed by number
+   246	  if(evenChange > 0)
+   247	  {
+   248	    printf("+");
+   249	  }
+   250	  printf("%d\n\n", evenChange);
+   251	}
